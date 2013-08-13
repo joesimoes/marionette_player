@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+
+  <head>
+    <title>BACKBONE Marionette Tutorial: Collections</title>
+    <script src="javascripts/jquery.js"></script>
+    <script src="javascripts/underscore.js"></script>
+    <script src="javascripts/backbone.js"></script>
+    <script src="javascripts/backbone.marionette.js"></script>
+    <script src="javascripts/soundmanager2.js"></script>
+
+    <script src="javascripts/application.js"></script>
+  </head>
+
+  <body>
+    <h1>Music App</h1>
+    <script type="text/template" id="playlists_template">
+      <thead>  
+         <tr> 
+            <th>Name</th>
+         </tr>
+        </thead>
+        <tbody>
+      </tbody>
+
+    </script>
+
+    <script type="text/template" id="playlist_template">
+      <td><%= name %></td>
+    
+      <td><a href="#" class="playTrack">Play</td>
+      <td><a href="#" class="deleteTrack">Delete</td>
+
+    </script>
+    <div id="content">
+    </div>
+
+  
+  </body>
