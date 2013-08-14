@@ -26,7 +26,7 @@ Track = Backbone.Marionette.ItemView.extend({
 	
 	events: {
 	  'click a.deleteTrack': 'deleteTrack',
-	  'click a.playTrack': 'playTrack'
+	  'click img.playTrack': 'playTrack'
 	},
 
 	initialize: function(){
@@ -38,17 +38,27 @@ Track = Backbone.Marionette.ItemView.extend({
 		this.model.destroy();
 	},
 
-	//start playTrack
-	playTrack: function(){
-		soundManager.createSound({
-			id: 'mySound',
-			url:'/Downloads/soundmanagerv297a-20130512/demo/_mp3/walking.mp3'
-		});
-		soundManager.play('mySound');
+	
+    playTrack: function(){ 
+    	
+    	   soundManager.url = 'swf'; 
+   		   soundManager.flashVersion = 8;  
+           soundManager.onready(function() { 
+             
+           }); 
 
-	}
-	// end playTrack
-});
+          soundManager.createSound({
+			id: 'mySound',
+		    url: 'mp3/test.mp3',
+		    autoLoad: true,
+			autoPlay: true
+		  });
+  		  
+	
+           console.log('hi');
+    }
+
+}); 
 
 
 
@@ -88,6 +98,10 @@ MyApp.addInitializer(function(options){
 
 $(document).ready(function(){
 
+
 	MyApp.start();
 
+   alert("Document Ready"); 
+
+	
 });
