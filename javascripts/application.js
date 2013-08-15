@@ -1,5 +1,3 @@
-
-
 MyApp = new Backbone.Marionette.Application();
 
 MyApp.addRegions({
@@ -7,13 +5,13 @@ MyApp.addRegions({
 	
 });
 
-Playlist = Backbone.Model.extend({
+TrackModel = Backbone.Model.extend({
 
 });
 
 Tracks = Backbone.Collection.extend({
 
-	model: Playlist,
+	model: TrackModel,
 	initialize: function(tracks){
 				
 	}
@@ -23,15 +21,19 @@ Track = Backbone.Marionette.ItemView.extend({
 	template: '#playlist_template',
 	tagName: 'tr',
 	className: 'playlist',
+
+	initialize: function(){
+		this.model.on('change', this.render, this);
+
+	},
 	
 	events: {
 	  'click a.deleteTrack': 'deleteTrack',
 	  'click img.playTrack': 'playTrack'
+	
 	},
 
-	initialize: function(){
 
-	},
 
 	deleteTrack: function(){
 		MyApp.trigger("track:deleteTrack", this.model);
@@ -40,26 +42,36 @@ Track = Backbone.Marionette.ItemView.extend({
 
 	
     playTrack: function(){ 
-    	
-    	   soundManager.url = 'swf'; 
-   		   soundManager.flashVersion = 8;  
-           soundManager.onready(function() { 
-             
-           }); 
-
-          soundManager.createSound({
-			id: 'mySound',
-		    url: 'mp3/test.mp3',
-		    autoLoad: true,
-			autoPlay: true
-		  });
-  		  
-	
-           console.log('hi');
+    	console.log('playing');
+			
     }
+
 
 }); 
 
+
+
+
+AddTrack = Backbone.Marionette.ItemView.extend({
+
+	el: '#addTrack',
+
+	initialize:function() { 
+	  
+    },
+
+    events: { 
+    'submit': 'submit'
+      
+    },
+    submit: function(e) {
+    	e.preventDefault();
+      	var newTrackTitle = $(e.currentTarget).find('input[type=text]').val();
+      	var track = new TrackModel({ title: newTrackTitle });
+      	this.collection.add(track);
+      	
+    }
+});
 
 
 TracksComposite = Backbone.Marionette.CompositeView.extend({
@@ -70,28 +82,35 @@ TracksComposite = Backbone.Marionette.CompositeView.extend({
 	itemView: Track,
 	initialize: function(){
 
-		this.model = new Playlist();
+		this.model = new TrackModel();
 
 		var tracks = new Tracks();
-		alert('tracks composite initialized');
+		
 
 		this.collection = tracks;
 
 		this.collection.set([
-			new Playlist({name: 'Wish You Were Here'}),
-			new Playlist({name: 'Yellow Submarine'}),
-			new Playlist({name: 'Thriller'})
+			new TrackModel({name: 'Wish You Were Here'}),
+			new TrackModel({name: 'Yellow Submarine'}),
+			new TrackModel({name: 'Thriller'})
 			]);
+		var addTrack = new AddTrack({composite: TracksComposite});
 
+		var tracksView = new Tracks({composite: TracksComposite});
+		
 	}
 
 
 });
 
-MyApp.addInitializer(function(options){
-	var tracksComposite = new TracksComposite({
+var tracksComposite = new TracksComposite({
 
 	});
+
+
+
+MyApp.addInitializer(function(options){
+	
 
 	MyApp.mainRegion.show(tracksComposite);
 });
@@ -100,8 +119,7 @@ $(document).ready(function(){
 
 
 	MyApp.start();
-
-   alert("Document Ready"); 
-
 	
+  
 });
+

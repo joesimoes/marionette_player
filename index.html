@@ -7,25 +7,37 @@
     <script src="javascripts/underscore.js"></script>
     <script src="javascripts/backbone.js"></script>
     <script src="javascripts/backbone.marionette.js"></script>
-    <script src="javascripts/soundmanager2.js"></script>
-
+ 
+    <script src="javascripts/soundmanager2.js"></script> 
     <script src="javascripts/application.js"></script>
+    <script src="javascripts/bootstrap.js"></script>
+    <link href="css/bootstrap.css" type="text/css" rel="stylesheet"></script>
+   
   </head>
 
   <body>
     <h1>Music App</h1>
+
     <script type="text/template" id="playlists_template">
+   
       <thead>  
          <tr> 
             <th>Name</th>
          </tr>
+
         </thead>
         <tbody>
+          
       </tbody>
-
+      
     </script>
+    <form id="addTrack" action="">
+      <input type="text" placeholder="Add Track">
+      <input type="submit" class="btn btn" value="Add Track">
+    </form>
 
     <script type="text/template" id="playlist_template">
+   
       <td><%= name %></td>
     
       <td><img src="images/play_button.png" class="playTrack"></img></td>
